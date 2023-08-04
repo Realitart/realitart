@@ -4,6 +4,7 @@ class AppButton extends StatelessWidget {
   final String label;
   final double width;
   final double height;
+  final double txtSize;
   final Color colorDefault;
   final Color borderColorDefault;
   final Color textColor;
@@ -17,6 +18,7 @@ class AppButton extends StatelessWidget {
     this.borderColorDefault = Colors.transparent,
     this.textColor = Colors.white,
     this.height = 50,
+    this.txtSize = 22,
     required this.onPressed,
     this.radius = 20.0,
   });
@@ -42,7 +44,7 @@ class AppButton extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Gilroy_bold',
                 fontWeight: FontWeight.w400,
-                fontSize: 22,
+                fontSize: txtSize,
                 color: textColor,
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realitart/core/framework/colors.dart';
+import 'package:realitart/core/framework/globals.dart';
 
 class LateralDrawer extends StatefulWidget {
   const LateralDrawer({Key? key}) : super(key: key);
@@ -35,25 +36,29 @@ class _LateralDrawerState extends State<LateralDrawer> {
             Container(
               width: MediaQuery.of(context).size.width * 0.35,
               height: MediaQuery.of(context).size.width * 0.35,
-              padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: black1,
               ),
-              child: loading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: black1,
+              child: ClipOval(
+                child: loading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : Image.network(
+                        generateRandomImgUrl(),
+                        fit: BoxFit.cover,
                       ),
-                    )
-                  : Image.asset('assets/imgs/logo.png'),
+              ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 loading ? 'Cargando...' : 'Uasername',
                 style: const TextStyle(
@@ -66,10 +71,13 @@ class _LateralDrawerState extends State<LateralDrawer> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.015,
             ),
-            btnimageTxt('assets/svg/home_icon.svg', 'Inicio', () => null),
+            btnimageTxt('assets/svg/home_icon.svg', 'Inicio',
+                () => Navigator.pushNamed(context, '/home')),
             btnimageTxt('assets/svg/profile_icon.svg', 'Perfil', () => null),
-            btnimageTxt('assets/svg/museum_icon.svg', 'Museos', () => null),
-            btnimageTxt('assets/svg/obras_icon.svg', 'Obras', () => null),
+            btnimageTxt('assets/svg/museum_icon.svg', 'Museos',
+                () => Navigator.pushNamed(context, '/museums')),
+            btnimageTxt('assets/svg/obras_icon.svg', 'Obras',
+                () => Navigator.pushNamed(context, '/works')),
             btnimageTxt('assets/svg/test_icon.svg', 'Test', () => null),
             const Spacer(),
             Padding(
@@ -103,7 +111,7 @@ class _LateralDrawerState extends State<LateralDrawer> {
                       actions: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black.withOpacity(0.25),
+                            backgroundColor: txtBlack.withOpacity(0.25),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
@@ -147,26 +155,42 @@ class _LateralDrawerState extends State<LateralDrawer> {
                     ),
                   );
                 },
-                child: Row(
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1),
-                      child: SvgPicture.asset(
-                        'assets/svg/logout_icon.svg',
-                        height: MediaQuery.of(context).size.height * 0.033,
-                        color: black1,
-                      ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 1),
+                          child: SvgPicture.asset(
+                            'assets/svg/logout_icon.svg',
+                            height: MediaQuery.of(context).size.height * 0.033,
+                            color: black1,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Cerrar Sesión',
+                            style: TextStyle(
+                                color: txtBlack,
+                                fontSize: 20,
+                                fontFamily: 'Gilroy_light',
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        'Cerrar Sesión',
-                        style: TextStyle(
-                            color: txtBlack,
-                            fontSize: 22,
-                            fontFamily: 'Gilroy_light',
-                            fontWeight: FontWeight.w700),
-                      ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      'Versión 1.0.0',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                          color: txtBlack,
+                          fontSize: 12,
+                          fontFamily: 'Gilroy_light',
+                          fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),

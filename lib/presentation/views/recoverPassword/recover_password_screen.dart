@@ -33,7 +33,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
               decoration: BoxDecoration(
                   color: grey1, borderRadius: BorderRadius.circular(15)),
               child: const Icon(Icons.arrow_back_ios_new,
-                  color: Colors.black, size: 20),
+                  color: txtBlack, size: 20),
             ),
           )),
       body: SingleChildScrollView(
@@ -51,7 +51,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Gilroy_bold',
-                        color: Colors.black,
+                        color: txtBlack,
                         fontSize: 26)),
               ),
               SvgPicture.asset('assets/svg/lock_cloud.svg',
@@ -69,7 +69,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
                           'Por favor, escriba su correo electrónico para recibir un código de confirmación para establecer una nueva contraseña',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontFamily: 'Lato',
+                              fontFamily: 'Lato_regular',
                               color: txtGrey,
                               fontSize: 13))),
                 ),

@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               decoration: BoxDecoration(
                   color: grey1, borderRadius: BorderRadius.circular(15)),
               child: const Icon(Icons.arrow_back_ios_new,
-                  color: Colors.black, size: 20),
+                  color: txtBlack, size: 20),
             ),
           )),
       body: SingleChildScrollView(
@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Gilroy_bold',
-                              color: Colors.black,
+                              color: txtBlack,
                               fontSize: 26)),
                     ),
                     SizedBox(
@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Gilroy_bold',
-                              color: Colors.black,
+                              color: txtBlack,
                               fontSize: 20)),
                     ),
                   ],

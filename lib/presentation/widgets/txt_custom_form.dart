@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:realitart/core/framework/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
@@ -7,6 +8,10 @@ class CustomTextFormField extends StatefulWidget {
   final IconData? rightIcon;
   final String? hintText, labelText;
   final TextInputType? keyboardType;
+  final int? maxLines;
+  final int? maxLength;
+  final Color? fillColor;
+  final Color? borderColor;
 
   const CustomTextFormField({
     Key? key,
@@ -17,6 +22,10 @@ class CustomTextFormField extends StatefulWidget {
     this.keyboardType,
     this.leftIcon,
     this.rightIcon,
+    this.maxLines,
+    this.maxLength,
+    this.fillColor,
+    this.borderColor,
   }) : super(key: key);
 
   @override
@@ -42,11 +51,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      cursorColor: Colors.black,
+      cursorColor: txtBlack,
       controller: widget.controller,
       keyboardType: widget.keyboardType ?? TextInputType.text,
       validator: widget.validator,
       focusNode: _focusNode,
+      maxLines: widget.maxLines,
+      maxLength: widget.maxLength,
       onTapOutside: (focusNode) {
         setState(() {
           _focusNode.unfocus();
@@ -55,8 +66,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: widget.rightIcon != null ? _isObscured : false,
       decoration: InputDecoration(
         filled: true,
-        fillColor:
-            _focusNode.hasFocus ? Colors.transparent : const Color(0xFFE5EBED),
+        fillColor: _focusNode.hasFocus
+            ? Colors.transparent
+            : widget.fillColor ?? const Color(0xFFE5EBED),
         prefixIcon: widget.leftIcon != null ? Icon(widget.leftIcon) : null,
         suffixIcon: widget.rightIcon != null
             ? IconButton(
@@ -73,20 +85,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         labelText: widget.labelText,
         hintText: widget.hintText,
         border: const OutlineInputBorder(),
-        prefixIconColor: Colors.black,
-        suffixIconColor: Colors.black,
-        labelStyle: const TextStyle(color: Colors.black),
+        prefixIconColor: txtBlack,
+        suffixIconColor: txtBlack,
+        labelStyle: const TextStyle(color: txtBlack),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: txtBlack),
         ),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           borderSide: BorderSide(color: Colors.red),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.transparent),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          borderSide:
+              BorderSide(color: widget.borderColor ?? Colors.transparent),
         ),
         focusedErrorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),

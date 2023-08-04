@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:realitart/core/framework/colors.dart';
 
 class CirclePainter extends CustomPainter {
   final double radius;
@@ -59,7 +60,7 @@ class _CustomRadioButtonsState extends State<CustomRadioButtons>
   String? _selectedOption;
   late AnimationController _controller;
   final Color _fillColor = const Color(0xFF424242);
-  final Color _borderColor = Colors.black;
+  final Color _borderColor = txtBlack;
 
   @override
   void initState() {

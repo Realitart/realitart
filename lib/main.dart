@@ -34,11 +34,11 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: const AppBarTheme(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              iconTheme: IconThemeData(color: Colors.black)),
+              iconTheme: IconThemeData(color: txtBlack)),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: basicColors)
               .copyWith(background: const Color(0xFFF3F8F9))),
       // initialRoute: '/first',
-      initialRoute: '/home',
+      initialRoute: '/works',
       routes: routes,
     );
   }

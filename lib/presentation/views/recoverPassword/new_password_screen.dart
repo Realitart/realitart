@@ -35,7 +35,7 @@ class _NewPasswordState extends State<NewPassword> {
               decoration: BoxDecoration(
                   color: grey1, borderRadius: BorderRadius.circular(15)),
               child: const Icon(Icons.arrow_back_ios_new,
-                  color: Colors.black, size: 20),
+                  color: txtBlack, size: 20),
             ),
           )),
       body: SingleChildScrollView(
@@ -53,7 +53,7 @@ class _NewPasswordState extends State<NewPassword> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Gilroy_bold',
-                        color: Colors.black,
+                        color: txtBlack,
                         fontSize: 26)),
               ),
               SvgPicture.asset('assets/svg/lock_cloud.svg',
@@ -70,7 +70,7 @@ class _NewPasswordState extends State<NewPassword> {
                       child: const Text('Escribe tu nueva contraseña',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontFamily: 'Lato',
+                              fontFamily: 'Lato_regular',
                               color: txtGrey,
                               fontSize: 13))),
                 ),

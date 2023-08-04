@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: BoxDecoration(
                   color: grey1, borderRadius: BorderRadius.circular(15)),
               child: const Icon(Icons.arrow_back_ios_new,
-                  color: Colors.black, size: 20),
+                  color: txtBlack, size: 20),
             ),
           )),
       body: SingleChildScrollView(
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Gilroy_bold',
-                        color: Colors.black,
+                        color: txtBlack,
                         fontSize: 26)),
               ),
               SizedBox(
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Gilroy_bold',
-                        color: Colors.black,
+                        color: txtBlack,
                         fontSize: 20)),
               ),
               loginForm(),
@@ -80,15 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: const Text('¿Olvidaste tu contraseña?',
                           style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Colors.black,
+                              fontFamily: 'Lato_regular',
+                              color: txtBlack,
                               fontSize: 16))),
                 ),
               ),
               GestureDetector(
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.pushNamed(context, '/init');
+                    Navigator.pushNamed(context, '/home');
                   }
                 },
                 child: Container(

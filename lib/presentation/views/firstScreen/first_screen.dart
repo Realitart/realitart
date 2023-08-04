@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:realitart/core/framework/colors.dart';
 import 'package:realitart/presentation/widgets/buttons.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -34,20 +35,20 @@ class FirstScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: 'Gilroy_bold',
-                          color: Colors.black,
+                          color: txtBlack,
                           fontSize: 26)),
                 ),
                 AppButton(
                     label: 'Ingreso',
-                    colorDefault: Colors.black,
+                    colorDefault: txtBlack,
                     width: MediaQuery.of(context).size.width * 0.7,
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     }),
                 AppButton(
                     label: 'Regístrate',
-                    textColor: Colors.black,
-                    borderColorDefault: Colors.black,
+                    textColor: txtBlack,
+                    borderColorDefault: txtBlack,
                     width: MediaQuery.of(context).size.width * 0.7,
                     onPressed: () {
                       Navigator.pushNamed(context, '/register');
