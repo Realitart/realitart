@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realitart/core/framework/colors.dart';
 import 'package:realitart/core/framework/globals.dart';
+import 'package:realitart/data/models/user_model.dart';
 
 class LateralDrawer extends StatefulWidget {
   const LateralDrawer({Key? key}) : super(key: key);
@@ -14,75 +17,95 @@ class _LateralDrawerState extends State<LateralDrawer> {
   //List of Map<String, String> with the menu options
 
   bool loading = false;
-
+  UserModel? user;
   @override
   void initState() {
     super.initState();
+    getUserData();
+  }
+
+  getUserData() async {
+    String userData = await getPreference('user');
+    var userJson = json.decode(userData);
+    setState(() {
+      user = UserModel.fromJson(userJson);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     //lateral bar drawer with user data and list menus
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.6,
+      width: MediaQuery.of(context).size.width * 0.7,
       backgroundColor: Colors.white,
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).viewPadding.top + 30,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: MediaQuery.of(context).size.width * 0.35,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: black1,
+            Stack(children: [
+              Container(
+                //img background
+                height: MediaQuery.of(context).size.height * 0.22,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/imgs/FondoPatron.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              child: ClipOval(
-                child: loading
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
+              Container(
+                width: MediaQuery.of(context).size.width * 0.15,
+                height: MediaQuery.of(context).size.width * 0.15,
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).viewPadding.top + 30,
+                    left: MediaQuery.of(context).size.width * 0.05),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: ClipOval(
+                  child: loading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : Image.network(
+                          "https://cdn-icons-png.flaticon.com/512/666/666201.png",
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    : Image.network(
-                        generateRandomImgUrl(),
-                        fit: BoxFit.cover,
-                      ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.center,
-              child: Text(
-                loading ? 'Cargando...' : 'Uasername',
-                style: const TextStyle(
-                    color: txtBlack,
-                    fontSize: 24,
-                    fontFamily: 'Gilroy_semibold',
-                    fontWeight: FontWeight.w700),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).viewPadding.top + 100),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  loading ? 'Cargando...' : user?.email ?? 'Username',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Lato_bold',
+                      fontWeight: FontWeight.w700),
+                ),
               ),
-            ),
+            ]),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.015,
             ),
             btnimageTxt('assets/svg/home_icon.svg', 'Inicio',
                 () => Navigator.pushNamed(context, '/home')),
-            btnimageTxt('assets/svg/profile_icon.svg', 'Perfil', () => null),
             btnimageTxt('assets/svg/museum_icon.svg', 'Museos',
                 () => Navigator.pushNamed(context, '/museums')),
             btnimageTxt('assets/svg/obras_icon.svg', 'Obras',
                 () => Navigator.pushNamed(context, '/works')),
-            btnimageTxt('assets/svg/test_icon.svg', 'Test', () => null),
+            btnimageTxt('assets/svg/test_icon.svg', 'Test',
+                () => Navigator.pushNamed(context, '/tests')),
             const Spacer(),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 8),
               child: GestureDetector(
                 onTap: () {
                   showDialog(
@@ -95,7 +118,7 @@ class _LateralDrawerState extends State<LateralDrawer> {
                         'Cerrar Sesión',
                         style: TextStyle(
                             color: txtBlack,
-                            fontSize: 24,
+                            fontSize: 18,
                             fontFamily: 'Gilroy_semibold',
                             fontWeight: FontWeight.w700),
                       ),
@@ -103,7 +126,7 @@ class _LateralDrawerState extends State<LateralDrawer> {
                         '¿Estás seguro que deseas cerrar sesión?',
                         style: TextStyle(
                             color: txtBlack,
-                            fontSize: 24,
+                            fontSize: 16,
                             fontFamily: 'Gilroy_semibold',
                             fontWeight: FontWeight.w700),
                       ),
@@ -122,31 +145,30 @@ class _LateralDrawerState extends State<LateralDrawer> {
                           child: const Text(
                             'Cancelar',
                             style: TextStyle(
-                                color: txtBlack,
-                                fontSize: 24,
+                                color: Colors.white,
+                                fontSize: 16,
                                 fontFamily: 'Gilroy_semibold',
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: black1,
+                            backgroundColor: const Color(0xFF302DA6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            // BlocProvider.of<UserBloc>(context, listen: false)
-                            //     .add(UserLogOutEvent());
+                            cleanPreference();
                             Navigator.pushNamedAndRemoveUntil(
-                                context, '/login', (route) => false);
+                                context, '/first', (route) => false);
                           },
                           child: const Text(
                             'Aceptar',
                             style: TextStyle(
-                                color: txtBlack,
-                                fontSize: 24,
+                                color: Colors.white,
+                                fontSize: 16,
                                 fontFamily: 'Gilroy_semibold',
                                 fontWeight: FontWeight.w700),
                           ),
@@ -161,11 +183,9 @@ class _LateralDrawerState extends State<LateralDrawer> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 1),
-                          child: SvgPicture.asset(
-                            'assets/svg/logout_icon.svg',
-                            height: MediaQuery.of(context).size.height * 0.033,
-                            color: black1,
-                          ),
+                          child: SvgPicture.asset('assets/svg/logout_icon.svg',
+                              height: MediaQuery.of(context).size.height * 0.03,
+                              color: black1),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(left: 20.0),
@@ -173,7 +193,7 @@ class _LateralDrawerState extends State<LateralDrawer> {
                             'Cerrar Sesión',
                             style: TextStyle(
                                 color: txtBlack,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontFamily: 'Gilroy_light',
                                 fontWeight: FontWeight.w700),
                           ),

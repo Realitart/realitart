@@ -7,6 +7,7 @@ import 'package:realitart/presentation/views/museums/museums_screen.dart';
 import 'package:realitart/presentation/views/recoverPassword/new_password_screen.dart';
 import 'package:realitart/presentation/views/recoverPassword/recover_password_screen.dart';
 import 'package:realitart/presentation/views/recoverPassword/verification_code_screen.dart';
+import 'package:realitart/presentation/views/test/test_screen.dart';
 import 'package:realitart/presentation/views/works/works_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -19,4 +20,5 @@ final Map<String, WidgetBuilder> routes = {
   '/home': (context) => const HomeScreen(),
   '/museums': (context) => const MuseumsScreen(),
   '/works': (context) => const WorksScreen(),
+  '/tests': (context) => const TestScreen(),
 };

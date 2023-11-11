@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realitart/core/framework/colors.dart';
 
-class SearchBar extends StatelessWidget {
+class CustomSearchBar extends StatelessWidget {
   final TextEditingController searchController;
   final ValueChanged<String> onSearchTextChanged;
   final VoidCallback onFilterPressed;
   final String? filtersLen;
 
-  const SearchBar({
+  const CustomSearchBar({
     required this.searchController,
     required this.onSearchTextChanged,
     required this.onFilterPressed,
@@ -40,7 +40,8 @@ class SearchBar extends StatelessWidget {
             icon: Stack(
               clipBehavior: Clip.none,
               children: [
-                SvgPicture.asset('assets/svg/filter_icon.svg', height: 25),
+                // SvgPicture.asset('assets/svg/filter_icon.svg', height: 25),
+                const Icon(Icons.filter_list_rounded, size: 25),
                 if (filtersLen != null && filtersLen != '0')
                   Positioned(
                     top: -5,
@@ -48,7 +49,7 @@ class SearchBar extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: black1,
+                        color: Color(0xFF302DA6),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       constraints: const BoxConstraints(
@@ -66,7 +67,6 @@ class SearchBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                // SvgPicture.asset('assets/svg/filter_icon.svg', height: 25)
               ],
             ),
           ),

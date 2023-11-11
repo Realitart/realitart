@@ -22,7 +22,7 @@ class CustomTextFormField extends StatefulWidget {
     this.keyboardType,
     this.leftIcon,
     this.rightIcon,
-    this.maxLines,
+    this.maxLines = 1,
     this.maxLength,
     this.fillColor,
     this.borderColor,
@@ -68,7 +68,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         filled: true,
         fillColor: _focusNode.hasFocus
             ? Colors.transparent
-            : widget.fillColor ?? const Color(0xFFE5EBED),
+            : widget.fillColor ?? Colors.white,
         prefixIcon: widget.leftIcon != null ? Icon(widget.leftIcon) : null,
         suffixIcon: widget.rightIcon != null
             ? IconButton(
@@ -85,12 +85,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         labelText: widget.labelText,
         hintText: widget.hintText,
         border: const OutlineInputBorder(),
-        prefixIconColor: txtBlack,
-        suffixIconColor: txtBlack,
+        prefixIconColor: const Color(0xFF302DA6),
+        suffixIconColor: const Color(0xFF302DA6),
         labelStyle: const TextStyle(color: txtBlack),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: txtBlack),
+          borderSide: BorderSide(color: Color(0xFF302DA6)),
         ),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),

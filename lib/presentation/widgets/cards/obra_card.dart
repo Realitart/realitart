@@ -1,40 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:realitart/core/framework/globals.dart';
+import 'package:realitart/data/models/artwork_model.dart';
 import 'package:realitart/presentation/views/works/work_detail.dart';
 
 import '../../../core/framework/colors.dart';
 import '../buttons.dart';
 
 class ObraCard extends StatelessWidget {
-  final String imgPath, title, description;
-  const ObraCard({
-    super.key,
-    required this.imgPath,
-    required this.title,
-    required this.description,
-  });
+  final ArtworkModel artwork;
+  const ObraCard({super.key, required this.artwork});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       //color with gradient
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       clipBehavior: Clip.antiAlias,
-      elevation: 10,
+      elevation: 2,
       margin: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 25),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.4,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Colors.white,
-              Color(0xFFE7E8EA),
-              Color(0xFFE7E8EA),
-              Color(0xFFE7E8EA),
-            ],
-          ),
-        ),
+        width: MediaQuery.of(context).size.width * 0.47,
+        decoration: const BoxDecoration(color: Color(0xFFF9F9F9)),
         child: Column(
           children: [
             ClipRRect(
@@ -43,8 +29,8 @@ class ObraCard extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
               child: Image.network(
-                imgPath,
-                height: MediaQuery.of(context).size.height * 0.12,
+                artwork.images,
+                height: MediaQuery.of(context).size.height * 0.16,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fill,
               ),
@@ -55,70 +41,70 @@ class ObraCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Text(title,
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                            fontFamily: 'Gilroy_bold',
-                            color: black1,
-                            fontSize: 16)),
-                  ),
+                  Text(artwork.categoryId.name,
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: 'Lato_bold',
+                          color: txtGrey,
+                          fontSize: 14)),
                   const SizedBox(
                     height: 5,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Text(description,
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontFamily: 'Lato_regular',
-                            color: txtGrey,
-                            fontSize: 13)),
+                  Text(artwork.name,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                          fontFamily: 'Gilroy_bold',
+                          color: black1,
+                          fontSize: 16)),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.star,
-                  color: black1,
-                  size: 16,
-                ),
-                const SizedBox(
-                  width: 2,
-                ),
-                const Text('9.2',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontFamily: 'Lato_regular',
-                        color: txtGrey,
-                        fontSize: 13)),
-                const SizedBox(
-                  width: 8,
-                ),
-                AppButton(
-                  label: 'Ver',
-                  radius: 10,
-                  txtSize: 17,
-                  width: MediaQuery.of(context).size.width * 0.16,
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  onPressed: () {
-                    //Navigate to WorkDetail()
-                    Navigator.push(
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.star_rounded,
+                        color: black1,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text('9.2',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontFamily: 'Lato_bold',
+                              color: txtGrey,
+                              fontSize: 14)),
+                      SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.035,
+                  ),
+                  InkWell(
+                    onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const WorkDetailScreen()));
-                  },
-                  textColor: txtBlack,
-                  colorDefault: Colors.white,
-                )
-              ],
+                            builder: (context) => WorkDetailScreen(
+                                  artwork: artwork,
+                                ))),
+                    child: const Text(
+                      'Ver más',
+                      style: TextStyle(
+                          fontFamily: 'Lato_regular',
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF3C38CF),
+                          fontSize: 16),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

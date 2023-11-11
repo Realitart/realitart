@@ -28,7 +28,7 @@ class FirstScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset('assets/imgs/logo.png',
-                    width: MediaQuery.of(context).size.width * 0.4),
+                    width: MediaQuery.of(context).size.width * 0.15),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: const Text('Comienza a explorar el arte sin límites',
@@ -36,19 +36,19 @@ class FirstScreen extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: 'Gilroy_bold',
                           color: txtBlack,
-                          fontSize: 26)),
+                          fontSize: 22)),
                 ),
                 AppButton(
                     label: 'Ingreso',
-                    colorDefault: txtBlack,
+                    colorDefault: const Color(0xFF302DA6),
                     width: MediaQuery.of(context).size.width * 0.7,
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     }),
                 AppButton(
                     label: 'Regístrate',
-                    textColor: txtBlack,
-                    borderColorDefault: txtBlack,
+                    textColor: const Color(0xFF302DA6),
+                    borderColorDefault: const Color(0xFF302DA6),
                     width: MediaQuery.of(context).size.width * 0.7,
                     onPressed: () {
                       Navigator.pushNamed(context, '/register');

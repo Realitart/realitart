@@ -59,7 +59,7 @@ class _CustomRadioButtonsState extends State<CustomRadioButtons>
     with SingleTickerProviderStateMixin {
   String? _selectedOption;
   late AnimationController _controller;
-  final Color _fillColor = const Color(0xFF424242);
+  final Color _fillColor = const Color(0xFF302DA6);
   final Color _borderColor = txtBlack;
 
   @override
@@ -81,6 +81,9 @@ class _CustomRadioButtonsState extends State<CustomRadioButtons>
   Widget build(BuildContext context) {
     return widget.isVertical
         ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: _buildRadioButtons(),
           )
         : Row(
@@ -92,49 +95,63 @@ class _CustomRadioButtonsState extends State<CustomRadioButtons>
   List<Widget> _buildRadioButtons() {
     return widget.options.map((option) {
       bool isSelected = option == _selectedOption;
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            _selectedOption = option;
-          });
-          if (widget.onChanged != null) {
-            widget.onChanged!(option);
-          }
-          _controller.reset();
-          _controller.forward();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: 24,
-              height: 24,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isSelected ? Colors.transparent : _borderColor,
-                    width: 2.0,
+      return Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedOption = option;
+              });
+              if (widget.onChanged != null) {
+                widget.onChanged!(option);
+              }
+              _controller.reset();
+              _controller.forward();
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: isSelected ? Colors.transparent : _borderColor,
+                        width: 2.0,
+                      ),
+                      color: isSelected ? _fillColor : Colors.transparent,
+                    ),
+                    child: isSelected
+                        ? const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          )
+                        : null,
                   ),
-                  color: isSelected ? _fillColor : Colors.transparent,
                 ),
-                child: isSelected
-                    ? const Center(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 18,
+                const SizedBox(width: 8),
+                widget.isVertical
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Text(
+                          option,
+                          maxLines: 2,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       )
-                    : null,
-              ),
+                    : Text(option),
+                const SizedBox(width: 15),
+              ],
             ),
-            const SizedBox(width: 8),
-            Text(option),
-            const SizedBox(width: 15),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10), // Espacio vertical adicional
+        ],
       );
     }).toList();
   }

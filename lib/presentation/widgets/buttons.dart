@@ -10,6 +10,7 @@ class AppButton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPressed;
   final double radius;
+  final Widget? icono;
   // ignore: use_key_in_widget_constructors
   const AppButton({
     required this.label,
@@ -21,6 +22,7 @@ class AppButton extends StatelessWidget {
     this.txtSize = 22,
     required this.onPressed,
     this.radius = 20.0,
+    this.icono,
   });
 
   @override
@@ -38,16 +40,20 @@ class AppButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.all(Radius.circular(radius)),
           onTap: onPressed,
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontFamily: 'Gilroy_bold',
-                fontWeight: FontWeight.w400,
-                fontSize: txtSize,
-                color: textColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icono ?? Container(),
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Gilroy_bold',
+                  fontWeight: FontWeight.w400,
+                  fontSize: txtSize,
+                  color: textColor,
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

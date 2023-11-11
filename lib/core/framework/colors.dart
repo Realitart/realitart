@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 const primaryGrey = Color(0xFFF5F5F5);
+const yellorstar = Color(0xFFFFBCA1B);
+const bluestar = Color(0xFFF728FBC);
 const grey1 = Color(0xFFE7E8EA);
 const black1 = Color(0xFF424242);
-const txtGrey = Color(0xFF8F959E);
+const txtGrey = Color(0xFF9699A3);
 const txtBlack = Color(0xFF555555);
 const btnGrey = Color(0xFFE5EBED);
 const btnGreyBold = Color(0xFFDBDBDB);

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:realitart/data/models/artwork_model.dart';
+import 'package:realitart/presentation/views/works/work_detail.dart';
 
 import '../../../core/framework/colors.dart';
 
 class NewObraCard extends StatelessWidget {
-  final String imgPath, title, description;
-  const NewObraCard({
-    super.key,
-    required this.imgPath,
-    required this.title,
-    required this.description,
-  });
+  final ArtworkModel artwork;
+  const NewObraCard({super.key, required this.artwork});
 
   @override
   Widget build(BuildContext context) {
@@ -17,101 +14,93 @@ class NewObraCard extends StatelessWidget {
       //color with gradient
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       clipBehavior: Clip.antiAlias,
-      elevation: 5,
-      margin: const EdgeInsets.only(bottom: 15, right: 5),
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: MediaQuery.of(context).size.height * 0.15,
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFF9F9F9),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              child: Image.network(
-                imgPath,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width * 0.2,
-                fit: BoxFit.fill,
-              ),
+            Image.network(
+              artwork.images,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width * 0.3,
+              fit: BoxFit.fill,
             ),
             const SizedBox(
               height: 5,
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.55,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+              width: MediaQuery.of(context).size.width * 0.5,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Text(title,
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
-                        style: const TextStyle(
-                            fontFamily: 'Gilroy_bold',
-                            color: black1,
-                            fontSize: 16)),
-                  ),
+                  Text(artwork.categoryId.name,
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: 'Lato_regular',
+                          color: txtGrey,
+                          fontSize: 14)),
                   const SizedBox(
-                    height: 2,
+                    height: 5,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.03,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.star,
+                  Text(artwork.name,
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: 'Gilroy_bold',
                           color: black1,
-                          size: 16,
-                        ),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        const Text('9.2',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontFamily: 'Lato_regular',
-                                color: txtGrey,
-                                fontSize: 13)),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(description,
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontFamily: 'Lato_regular',
-                                color: txtGrey,
-                                fontSize: 14))
-                      ],
-                    ),
+                          fontSize: 16)),
+                  const SizedBox(
+                    height: 5,
                   ),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.star_rounded,
+                        color: black1,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text('9.2',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontFamily: 'Lato_bold',
+                              color: txtGrey,
+                              fontSize: 14)),
+                      SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WorkDetailScreen(
+                                  artwork: artwork,
+                                ))),
+                    child: const Text(
+                      'Ver más',
+                      style: TextStyle(
+                          fontFamily: 'Lato_regular',
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF3C38CF),
+                          fontSize: 16),
+                    ),
+                  )
                 ],
-              ),
-            ),
-            //Icon button square with radius
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.075,
-                height: MediaQuery.of(context).size.width * 0.075,
-                margin: const EdgeInsets.only(right: 10, bottom: 15),
-                decoration: const BoxDecoration(
-                  color: btnGrey,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 20,
-                  color: black1,
-                ),
               ),
             ),
           ],

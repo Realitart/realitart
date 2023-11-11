@@ -11,8 +11,13 @@ buildscript {
     }
 }
 
+
 allprojects {
     repositories {
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+
         google()
         mavenCentral()
     }
@@ -26,6 +31,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

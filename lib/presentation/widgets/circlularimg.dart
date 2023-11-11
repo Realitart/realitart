@@ -16,7 +16,7 @@ class CircularImg extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(color: black1, width: 2.5)),
         child: CircleAvatar(
-          backgroundImage: AssetImage(pathImg),
+          backgroundImage: NetworkImage(pathImg),
           backgroundColor: Colors.white,
         ));
   }

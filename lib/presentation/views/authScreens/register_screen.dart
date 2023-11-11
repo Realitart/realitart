@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:realitart/core/framework/colors.dart';
+import 'package:realitart/data/models/auth_model.dart';
+import 'package:realitart/data/models/user_model.dart';
+import 'package:realitart/data/services/auth_service.dart';
+import 'package:realitart/presentation/widgets/dialogs/erro_alert_dialog.dart';
 import 'package:realitart/presentation/widgets/radio_buttons.dart';
 import 'package:realitart/presentation/widgets/txt_custom_form.dart';
 
@@ -16,6 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameTxt = TextEditingController();
   TextEditingController usernameTxt = TextEditingController();
   TextEditingController passwordTxt = TextEditingController();
+  bool registerloading = false;
+  late String userType;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -26,6 +32,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  showErrorDialog() {
+    setState(() {
+      registerloading = false;
+    });
+    return showDialog(
+        context: context,
+        builder: ErrorAlertDialog(
+          func_back: () {},
+          errorMessage: 'Error al registrar usuario',
+        ).build);
+  }
+
+  void register() {
+    setState(() {
+      registerloading = true;
+    });
+    AuthModel authModel = AuthModel(
+      username: usernameTxt.text,
+      password: passwordTxt.text,
+    );
+    UserModel userModel = UserModel(
+      email: emailTxt.text,
+      name: nameTxt.text,
+      username: usernameTxt.text,
+      password: passwordTxt.text,
+      activeNotifications: true,
+      imageId: 1,
+      id: 0,
+      idUserType: userType == 'Profesor' ? 2 : 3,
+    );
+    AuthService().register(authModel).then((value) {
+      if (value) {
+        AuthService().createUser(userModel).then((value) {
+          if (value) {
+            Navigator.pushNamed(context, '/home');
+          } else {
+            showErrorDialog();
+          }
+        });
+      } else {
+        showErrorDialog();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, '/first');
             },
             child: Container(
               margin: const EdgeInsets.all(5),
@@ -55,10 +106,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                     Image.asset('assets/imgs/logo.png',
-                        width: MediaQuery.of(context).size.width * 0.7),
+                        width: MediaQuery.of(context).size.width * 0.3),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -66,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Gilroy_bold',
-                              color: txtBlack,
+                              color: Color(0xFF302DA6),
                               fontSize: 26)),
                     ),
                     SizedBox(
@@ -75,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Gilroy_bold',
-                              color: txtBlack,
+                              color: Color(0xFF302DA6),
                               fontSize: 20)),
                     ),
                   ],
@@ -89,20 +141,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               GestureDetector(
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    print('Validado');
+                    register();
                   }
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width,
-                  color: black1,
+                  color: const Color(0xFF302DA6),
                   alignment: Alignment.topCenter,
                   padding: const EdgeInsets.only(top: 20),
-                  child: const Text('Registrate',
-                      style: TextStyle(
-                          fontFamily: 'Gilroy_bold',
+                  child: registerloading
+                      ? const CircularProgressIndicator(
                           color: Colors.white,
-                          fontSize: 20)),
+                        )
+                      : const Text('Registrate',
+                          style: TextStyle(
+                              fontFamily: 'Gilroy_bold',
+                              color: Colors.white,
+                              fontSize: 20)),
                 ),
               ),
             ],
@@ -123,8 +179,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               CustomRadioButtons(
                   options: const ['Profesor', 'Estudiante'],
                   isVertical: false,
-                  onChanged: (value) {}),
-              const SizedBox(height: 10),
+                  onChanged: (value) {
+                    setState(() {
+                      userType = value;
+                    });
+                  }),
+              const SizedBox(height: 15),
               CustomTextFormField(
                 controller: nameTxt,
                 leftIcon: Icons.person_rounded,
